@@ -1,6 +1,5 @@
-<Activity mc:Ignorable="sap sap2010" x:Class="Get_Ready_Process_Data" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:njl="clr-namespace:Newtonsoft.Json.Linq;assembly=Newtonsoft.Json" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:sc="clr-namespace:System.Collections;assembly=System.Private.CoreLib" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=System.Private.CoreLib" xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=System.Private.CoreLib" xmlns:sd="clr-namespace:System.Data;assembly=System.Data.Common" xmlns:this="clr-namespace:" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+<Activity mc:Ignorable="sap sap2010" x:Class="Get_Ready_Process_Data" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:sc="clr-namespace:System.Collections;assembly=System.Private.CoreLib" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=System.Private.CoreLib" xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=System.Private.CoreLib" xmlns:sd="clr-namespace:System.Data;assembly=System.Data.Common" xmlns:this="clr-namespace:" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
   <x:Members>
-    <x:Property Name="in_jsonConfig" Type="InArgument(njl:JObject)" />
     <x:Property Name="in_tableName" Type="InArgument(x:String)" />
     <x:Property Name="in_period" Type="InArgument(x:String)" />
     <x:Property Name="in_connectionString" Type="InArgument(x:String)" />
@@ -113,8 +112,8 @@
   <Sequence DisplayName="Get_Ready_Process_Data" sap:VirtualizedContainerService.HintSize="572,1195" sap2010:WorkflowViewState.IdRef="Sequence_1">
     <Sequence.Variables>
       <Variable x:TypeArguments="x:String" Name="SQLString" />
-      <Variable x:TypeArguments="x:String" Name="columnString" />
       <Variable x:TypeArguments="x:String" Name="columnSettingString" />
+      <Variable x:TypeArguments="x:String" Name="columnString" />
     </Sequence.Variables>
     <sap:WorkflowViewStateService.ViewState>
       <scg:Dictionary x:TypeArguments="x:String, x:Object">
@@ -139,16 +138,16 @@
             </ui:AssignOperation.To>
             <ui:AssignOperation.Value>
               <InArgument x:TypeArguments="x:String">
-                <CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_12" xml:space="preserve">@"SELECT [ID]
-      ,[taskName]
-      ,[period]
-      ,[processStartTime]
+                <CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_13" xml:space="preserve">@"SELECT `ID`
+      ,`taskName`
+      ,`period`
+      ,`processStartTime`
       $TableColumns
-      ,[processEndTime]
-      ,[Status]
-      ,[comment]
-  FROM [$TableName]
- WHERE ([Status] is null or [Status] = 'Running')"</CSharpValue>
+      ,`processEndTime`
+      ,`Status`
+      ,`comment`
+  FROM `$TableName`
+ WHERE (`Status` is null or `Status` = 'Running')"</CSharpValue>
               </InArgument>
             </ui:AssignOperation.Value>
           </ui:AssignOperation>
@@ -167,24 +166,24 @@
           <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_3">
             <ui:AssignOperation.To>
               <OutArgument x:TypeArguments="x:String">
-                <CSharpReference x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpReference`1_5">columnString</CSharpReference>
+                <CSharpReference x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpReference`1_5">columnSettingString</CSharpReference>
               </OutArgument>
             </ui:AssignOperation.To>
             <ui:AssignOperation.Value>
               <InArgument x:TypeArguments="x:String">
-                <Literal x:TypeArguments="x:String" Value="" />
+                <CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_14">@",`$ColumnName`"</CSharpValue>
               </InArgument>
             </ui:AssignOperation.Value>
           </ui:AssignOperation>
           <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_4">
             <ui:AssignOperation.To>
               <OutArgument x:TypeArguments="x:String">
-                <CSharpReference x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpReference`1_6">columnSettingString</CSharpReference>
+                <CSharpReference x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpReference`1_6">columnString</CSharpReference>
               </OutArgument>
             </ui:AssignOperation.To>
             <ui:AssignOperation.Value>
               <InArgument x:TypeArguments="x:String">
-                <CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_13">@",[$ColumnName]"</CSharpValue>
+                <Literal x:TypeArguments="x:String" Value="" />
               </InArgument>
             </ui:AssignOperation.Value>
           </ui:AssignOperation>
@@ -214,7 +213,7 @@
                     </ui:AssignOperation.To>
                     <ui:AssignOperation.Value>
                       <InArgument x:TypeArguments="x:String">
-                        <CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_15">columnString + columnSettingString.Replace("$ColumnName", currentItem.ToString())</CSharpValue>
+                        <CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_16">columnString + columnSettingString.Replace("$ColumnName", currentItem.ToString())</CSharpValue>
                       </InArgument>
                     </ui:AssignOperation.Value>
                   </ui:AssignOperation>
@@ -226,7 +225,7 @@
       </ui:ForEach.Body>
       <ui:ForEach.Values>
         <InArgument x:TypeArguments="sc:IEnumerable">
-          <CSharpValue x:TypeArguments="sc:IEnumerable" sap2010:WorkflowViewState.IdRef="CSharpValue`1_14">in_columnList</CSharpValue>
+          <CSharpValue x:TypeArguments="sc:IEnumerable" sap2010:WorkflowViewState.IdRef="CSharpValue`1_15">in_columnList</CSharpValue>
         </InArgument>
       </ui:ForEach.Values>
       <sap:WorkflowViewStateService.ViewState>
@@ -244,7 +243,7 @@
       </Assign.To>
       <Assign.Value>
         <InArgument x:TypeArguments="x:String">
-          <CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_16">SQLString.Replace("$TableColumns", columnString)</CSharpValue>
+          <CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_17">SQLString.Replace("$TableColumns", columnString)</CSharpValue>
         </InArgument>
       </Assign.Value>
     </Assign>
@@ -279,7 +278,7 @@
         <Sequence sap2010:WorkflowViewState.IdRef="Sequence_3" />
       </If.Else>
     </If>
-    <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Component\\RPA Database Component\\SQL Server\\Common\\SQL Execution Has Data Return.xaml - Invoke Workflow File" sap:VirtualizedContainerService.HintSize="510,115" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_2" UnSafe="False" WorkflowFileName="Component\\RPA Database Component\\SQL Server\\Common\\SQL Execution Has Data Return.xaml">
+    <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="SQL Execution Has Data Return.xaml - Invoke Workflow File" sap:VirtualizedContainerService.HintSize="510,115" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_2" UnSafe="False" WorkflowFileName="Component\\RPA Database Component\\MySQL\\Common\\SQL Execution Has Data Return.xaml">
       <ui:InvokeWorkflowFile.Arguments>
         <InArgument x:TypeArguments="x:String" x:Key="in_connectionString">
           <CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_7">in_connectionString</CSharpValue>

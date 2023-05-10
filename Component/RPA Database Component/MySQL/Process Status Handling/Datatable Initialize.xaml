@@ -8,7 +8,7 @@
     <InArgument x:TypeArguments="scg:List(x:String)" />
   </this:Datatable_Initialize.in_columnList>
   <sap2010:ExpressionActivityEditor.ExpressionActivityEditor>C#</sap2010:ExpressionActivityEditor.ExpressionActivityEditor>
-  <sap:VirtualizedContainerService.HintSize>1450,1699</sap:VirtualizedContainerService.HintSize>
+  <sap:VirtualizedContainerService.HintSize>1450,2312</sap:VirtualizedContainerService.HintSize>
   <sap2010:WorkflowViewState.IdRef>ActivityBuilder_1</sap2010:WorkflowViewState.IdRef>
   <TextExpression.NamespacesForImplementation>
     <sco:Collection x:TypeArguments="x:String">
@@ -100,7 +100,7 @@
       <AssemblyReference>UiPath.Python</AssemblyReference>
     </sco:Collection>
   </TextExpression.ReferencesForImplementation>
-  <Sequence DisplayName="Datatable_Initialize" sap:VirtualizedContainerService.HintSize="634,1634" sap2010:WorkflowViewState.IdRef="Sequence_1">
+  <Sequence DisplayName="Datatable_Initialize" sap:VirtualizedContainerService.HintSize="632,2247" sap2010:WorkflowViewState.IdRef="Sequence_1">
     <Sequence.Variables>
       <Variable x:TypeArguments="x:String" Name="SQLString" />
       <Variable x:TypeArguments="x:String" Name="columnSettingString" />
@@ -112,17 +112,17 @@
         <x:Boolean x:Key="IsExpanded">True</x:Boolean>
       </scg:Dictionary>
     </sap:WorkflowViewStateService.ViewState>
-    <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="572,113" sap2010:WorkflowViewState.IdRef="LogMessage_1" Level="Info">
+    <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="570,113" sap2010:WorkflowViewState.IdRef="LogMessage_1" Level="Info">
       <ui:LogMessage.Message>
         <InArgument x:TypeArguments="x:Object">
           <CSharpValue x:TypeArguments="x:Object" sap2010:WorkflowViewState.IdRef="CSharpValue`1_1">"exception datatable initialize"</CSharpValue>
         </InArgument>
       </ui:LogMessage.Message>
     </ui:LogMessage>
-    <Sequence DisplayName="datatable initialize" sap:VirtualizedContainerService.HintSize="572,85" sap2010:WorkflowViewState.IdRef="Sequence_3">
+    <Sequence DisplayName="datatable initialize" sap:VirtualizedContainerService.HintSize="570,956" sap2010:WorkflowViewState.IdRef="Sequence_3">
       <sap:WorkflowViewStateService.ViewState>
         <scg:Dictionary x:TypeArguments="x:String, x:Object">
-          <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
           <x:Boolean x:Key="IsPinned">False</x:Boolean>
         </scg:Dictionary>
       </sap:WorkflowViewStateService.ViewState>
@@ -137,29 +137,19 @@
               </ui:AssignOperation.To>
               <ui:AssignOperation.Value>
                 <InArgument x:TypeArguments="x:String">
-                  <CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_34" xml:space="preserve">@"IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'$TableName') AND type in (N'U'))
-BEGIN
-CREATE TABLE $TableName(
-	[ID] [nvarchar](50) NOT NULL,
-	[taskName] [nvarchar](max) NOT NULL,
-	[period] [nvarchar](100) NULL,
-	[processStartTime] [datetime] NULL,
+                  <CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_36" xml:space="preserve">@"CREATE TABLE IF NOT EXISTS `$TableName`(
+	`ID` varchar(50) NOT NULL DEFAULT(UUID()),
+	`taskName` varchar(5000) NOT NULL,
+	`period` varchar(100) NULL,
+	`processStartTime` datetime(0) NULL,
 	$TableColumns
-	[processEndTime] [datetime] NULL,
-    [status] [nvarchar](100) NULL,
-	[comment] [nvarchar](max) NULL,
-    [createDate] [datetime] NOT NULL,
-	[modifyDate] [datetime] NOT NULL,
- CONSTRAINT [PK_$TableName] PRIMARY KEY CLUSTERED 
-(
-	[ID] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
-) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
-
-ALTER TABLE $TableName ADD  CONSTRAINT [DF_$TableName_ID]  DEFAULT (newid()) FOR [ID]
-ALTER TABLE $TableName ADD  CONSTRAINT [DF_$TableName_createDate]  DEFAULT (getdate()) FOR [createDate]
-ALTER TABLE $TableName ADD  CONSTRAINT [DF_$TableName_modifyDate]  DEFAULT (getdate()) FOR [modifyDate]
-END"</CSharpValue>
+	`processEndTime` datetime(0) NULL,
+    `status` varchar(100) NULL,
+	`comment` varchar(5000) NULL,
+    `createDate` datetime(0) NOT NULL DEFAULT(NOW()),
+	`modifyDate` datetime(0) NOT NULL DEFAULT(NOW()),
+ PRIMARY KEY (`ID`) USING BTREE
+)"</CSharpValue>
                 </InArgument>
               </ui:AssignOperation.Value>
             </ui:AssignOperation>
@@ -183,9 +173,9 @@ END"</CSharpValue>
               </ui:AssignOperation.To>
               <ui:AssignOperation.Value>
                 <InArgument x:TypeArguments="x:String">
-                  <CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_7" xml:space="preserve">@"[$ColumnName] [nvarchar](50) NULL,
-	[$ColumnNameStartTime] [datetime] NULL,
-	[$ColumnNameEndTime] [datetime] NULL,"</CSharpValue>
+                  <CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_37" xml:space="preserve">@"`$ColumnName` varchar(50) NULL,
+	`$ColumnNameStartTime` datetime(0) NULL,
+	`$ColumnNameEndTime` datetime(0) NULL,"</CSharpValue>
                 </InArgument>
               </ui:AssignOperation.Value>
             </ui:AssignOperation>
@@ -255,7 +245,7 @@ END"</CSharpValue>
           </InArgument>
         </Assign.Value>
       </Assign>
-      <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Component\\RPA Database Component\\SQL Server\\Common\\SQL Execution Non Data Return.xaml - Invoke Workflow File" sap:VirtualizedContainerService.HintSize="508,115" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_1" UnSafe="False" WorkflowFileName="Component\\RPA Database Component\\SQL Server\\Common\\SQL Execution Non Data Return.xaml">
+      <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="SQL Execution Non Data Return.xaml - Invoke Workflow File" sap:VirtualizedContainerService.HintSize="508,115" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_1" UnSafe="False" WorkflowFileName="Component\\RPA Database Component\\MySQL\Common\\SQL Execution Non Data Return.xaml">
         <ui:InvokeWorkflowFile.Arguments>
           <InArgument x:TypeArguments="x:String" x:Key="in_connectionString">
             <CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_4">in_connectionString</CSharpValue>
@@ -266,211 +256,144 @@ END"</CSharpValue>
         </ui:InvokeWorkflowFile.Arguments>
       </ui:InvokeWorkflowFile>
     </Sequence>
-    <Sequence DisplayName="viewtable initialize" sap:VirtualizedContainerService.HintSize="572,1245" sap2010:WorkflowViewState.IdRef="Sequence_4">
+    <Sequence DisplayName="viewtable initialize" sap:VirtualizedContainerService.HintSize="570,987" sap2010:WorkflowViewState.IdRef="Sequence_4">
       <sap:WorkflowViewStateService.ViewState>
         <scg:Dictionary x:TypeArguments="x:String, x:Object">
           <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          <x:Boolean x:Key="IsPinned">False</x:Boolean>
         </scg:Dictionary>
       </sap:WorkflowViewStateService.ViewState>
-      <ui:MultipleAssign DisplayName="Multiple Assign" sap:VirtualizedContainerService.HintSize="510,132" sap2010:WorkflowViewState.IdRef="MultipleAssign_3">
+      <ui:MultipleAssign DisplayName="Multiple Assign" sap:VirtualizedContainerService.HintSize="508,194" sap2010:WorkflowViewState.IdRef="MultipleAssign_4">
         <ui:MultipleAssign.AssignOperations>
           <scg:List x:TypeArguments="ui:AssignOperation" Capacity="4">
-            <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_5">
+            <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_7">
               <ui:AssignOperation.To>
                 <OutArgument x:TypeArguments="x:String">
-                  <CSharpReference x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpReference`1_6">SQLString</CSharpReference>
+                  <CSharpReference x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpReference`1_9">SQLString</CSharpReference>
                 </OutArgument>
               </ui:AssignOperation.To>
               <ui:AssignOperation.Value>
                 <InArgument x:TypeArguments="x:String">
-                  <CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_24">@"select * from sys.views where name=N'$ViewTableName'"</CSharpValue>
+                  <CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_41" xml:space="preserve">@"create or replace view `ViewTable_ProcessStatus`
+as
+select `ID`, 
+          `taskName`, 
+          `period`, 
+          `processStartTime`, 
+          $TableColumns
+          `processEndTime`, 
+          `Status`, 
+          `comment`
+from `DataTable_ProcessStatus`;"</CSharpValue>
                 </InArgument>
               </ui:AssignOperation.Value>
             </ui:AssignOperation>
-            <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_6">
+            <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_8">
               <ui:AssignOperation.To>
                 <OutArgument x:TypeArguments="x:String">
-                  <CSharpReference x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpReference`1_7">SQLString</CSharpReference>
+                  <CSharpReference x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpReference`1_10">SQLString</CSharpReference>
                 </OutArgument>
               </ui:AssignOperation.To>
               <ui:AssignOperation.Value>
                 <InArgument x:TypeArguments="x:String">
-                  <CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_35">SQLString.Replace("$ViewTableName", "ViewTable_" + in_tableName)</CSharpValue>
+                  <CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_22">SQLString.Replace("$TableName", "ViewTable_" + in_tableName)</CSharpValue>
+                </InArgument>
+              </ui:AssignOperation.Value>
+            </ui:AssignOperation>
+            <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_9">
+              <ui:AssignOperation.To>
+                <OutArgument x:TypeArguments="x:String">
+                  <CSharpReference x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpReference`1_11">columnString</CSharpReference>
+                </OutArgument>
+              </ui:AssignOperation.To>
+              <ui:AssignOperation.Value>
+                <InArgument x:TypeArguments="x:String">
+                  <Literal x:TypeArguments="x:String" Value="" />
+                </InArgument>
+              </ui:AssignOperation.Value>
+            </ui:AssignOperation>
+            <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_10">
+              <ui:AssignOperation.To>
+                <OutArgument x:TypeArguments="x:String">
+                  <CSharpReference x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpReference`1_12">columnSettingString</CSharpReference>
+                </OutArgument>
+              </ui:AssignOperation.To>
+              <ui:AssignOperation.Value>
+                <InArgument x:TypeArguments="x:String">
+                  <CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_40">@"`$ColumnName`,"</CSharpValue>
                 </InArgument>
               </ui:AssignOperation.Value>
             </ui:AssignOperation>
           </scg:List>
         </ui:MultipleAssign.AssignOperations>
       </ui:MultipleAssign>
-      <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Component\\RPA Database Component\\SQL Server\\Common\\SQL Execution Has Data Return.xaml - Invoke Workflow File" sap:VirtualizedContainerService.HintSize="510,115" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_3" UnSafe="False" WorkflowFileName="Component\\RPA Database Component\\SQL Server\\Common\\SQL Execution Has Data Return.xaml">
-        <ui:InvokeWorkflowFile.Arguments>
-          <InArgument x:TypeArguments="x:String" x:Key="in_connectionString">
-            <CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_19">in_connectionString</CSharpValue>
+      <ui:ForEach x:TypeArguments="x:String" CurrentIndex="{x:Null}" DisplayName="For Each" sap:VirtualizedContainerService.HintSize="508,363" sap2010:WorkflowViewState.IdRef="ForEach`1_3">
+        <ui:ForEach.Body>
+          <ActivityAction x:TypeArguments="x:String">
+            <ActivityAction.Argument>
+              <DelegateInArgument x:TypeArguments="x:String" Name="currentItem" />
+            </ActivityAction.Argument>
+            <Sequence DisplayName="Body" sap:VirtualizedContainerService.HintSize="474,189" sap2010:WorkflowViewState.IdRef="Sequence_7">
+              <sap:WorkflowViewStateService.ViewState>
+                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                  <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                </scg:Dictionary>
+              </sap:WorkflowViewStateService.ViewState>
+              <ui:MultipleAssign DisplayName="Multiple Assign" sap:VirtualizedContainerService.HintSize="432,101" sap2010:WorkflowViewState.IdRef="MultipleAssign_5">
+                <ui:MultipleAssign.AssignOperations>
+                  <scg:List x:TypeArguments="ui:AssignOperation" Capacity="4">
+                    <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_11">
+                      <ui:AssignOperation.To>
+                        <OutArgument x:TypeArguments="x:String">
+                          <CSharpReference x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpReference`1_13">columnString</CSharpReference>
+                        </OutArgument>
+                      </ui:AssignOperation.To>
+                      <ui:AssignOperation.Value>
+                        <InArgument x:TypeArguments="x:String">
+                          <CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_29">columnString + columnSettingString.Replace("$ColumnName", currentItem.ToString())</CSharpValue>
+                        </InArgument>
+                      </ui:AssignOperation.Value>
+                    </ui:AssignOperation>
+                  </scg:List>
+                </ui:MultipleAssign.AssignOperations>
+              </ui:MultipleAssign>
+            </Sequence>
+          </ActivityAction>
+        </ui:ForEach.Body>
+        <ui:ForEach.Values>
+          <InArgument x:TypeArguments="sc:IEnumerable">
+            <CSharpValue x:TypeArguments="sc:IEnumerable" sap2010:WorkflowViewState.IdRef="CSharpValue`1_28">in_columnList</CSharpValue>
           </InArgument>
-          <InArgument x:TypeArguments="x:String" x:Key="in_SQLCommandString">
-            <CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_20">SQLString</CSharpValue>
-          </InArgument>
-          <OutArgument x:TypeArguments="sd:DataTable" x:Key="out_dt_result">
-            <CSharpReference x:TypeArguments="sd:DataTable" sap2010:WorkflowViewState.IdRef="CSharpReference`1_8">dt_result</CSharpReference>
-          </OutArgument>
-        </ui:InvokeWorkflowFile.Arguments>
-      </ui:InvokeWorkflowFile>
-      <If sap:VirtualizedContainerService.HintSize="510,807" sap2010:WorkflowViewState.IdRef="If_1">
-        <If.Condition>
-          <InArgument x:TypeArguments="x:Boolean">
-            <CSharpValue x:TypeArguments="x:Boolean" sap2010:WorkflowViewState.IdRef="CSharpValue`1_25">dt_result.Rows.Count &lt;= 0</CSharpValue>
-          </InArgument>
-        </If.Condition>
+        </ui:ForEach.Values>
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
             <x:Boolean x:Key="IsPinned">False</x:Boolean>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
-        <If.Then>
-          <Sequence sap:VirtualizedContainerService.HintSize="476,655" sap2010:WorkflowViewState.IdRef="Sequence_5">
-            <sap:WorkflowViewStateService.ViewState>
-              <scg:Dictionary x:TypeArguments="x:String, x:Object">
-                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
-              </scg:Dictionary>
-            </sap:WorkflowViewStateService.ViewState>
-            <ui:MultipleAssign DisplayName="Multiple Assign" sap:VirtualizedContainerService.HintSize="434,194" sap2010:WorkflowViewState.IdRef="MultipleAssign_4">
-              <ui:MultipleAssign.AssignOperations>
-                <scg:List x:TypeArguments="ui:AssignOperation" Capacity="4">
-                  <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_7">
-                    <ui:AssignOperation.To>
-                      <OutArgument x:TypeArguments="x:String">
-                        <CSharpReference x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpReference`1_9">SQLString</CSharpReference>
-                      </OutArgument>
-                    </ui:AssignOperation.To>
-                    <ui:AssignOperation.Value>
-                      <InArgument x:TypeArguments="x:String">
-                        <CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_36" xml:space="preserve">@"create view [ViewTable_ProcessStatus]
-as
-select [ID], 
-          [taskName], 
-          [period], 
-          [processStartTime], 
-          $TableColumns
-          [processEndTime], 
-          [Status], 
-          [comment]
-from [DataTable_ProcessStatus];"</CSharpValue>
-                      </InArgument>
-                    </ui:AssignOperation.Value>
-                  </ui:AssignOperation>
-                  <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_8">
-                    <ui:AssignOperation.To>
-                      <OutArgument x:TypeArguments="x:String">
-                        <CSharpReference x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpReference`1_10">SQLString</CSharpReference>
-                      </OutArgument>
-                    </ui:AssignOperation.To>
-                    <ui:AssignOperation.Value>
-                      <InArgument x:TypeArguments="x:String">
-                        <CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_22">SQLString.Replace("$TableName", "ViewTable_" + in_tableName)</CSharpValue>
-                      </InArgument>
-                    </ui:AssignOperation.Value>
-                  </ui:AssignOperation>
-                  <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_9">
-                    <ui:AssignOperation.To>
-                      <OutArgument x:TypeArguments="x:String">
-                        <CSharpReference x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpReference`1_11">columnString</CSharpReference>
-                      </OutArgument>
-                    </ui:AssignOperation.To>
-                    <ui:AssignOperation.Value>
-                      <InArgument x:TypeArguments="x:String">
-                        <Literal x:TypeArguments="x:String" Value="" />
-                      </InArgument>
-                    </ui:AssignOperation.Value>
-                  </ui:AssignOperation>
-                  <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_10">
-                    <ui:AssignOperation.To>
-                      <OutArgument x:TypeArguments="x:String">
-                        <CSharpReference x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpReference`1_12">columnSettingString</CSharpReference>
-                      </OutArgument>
-                    </ui:AssignOperation.To>
-                    <ui:AssignOperation.Value>
-                      <InArgument x:TypeArguments="x:String">
-                        <CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_27">@"[$ColumnName],"</CSharpValue>
-                      </InArgument>
-                    </ui:AssignOperation.Value>
-                  </ui:AssignOperation>
-                </scg:List>
-              </ui:MultipleAssign.AssignOperations>
-            </ui:MultipleAssign>
-            <ui:ForEach x:TypeArguments="x:String" CurrentIndex="{x:Null}" DisplayName="For Each" sap:VirtualizedContainerService.HintSize="434,54" sap2010:WorkflowViewState.IdRef="ForEach`1_3">
-              <ui:ForEach.Body>
-                <ActivityAction x:TypeArguments="x:String">
-                  <ActivityAction.Argument>
-                    <DelegateInArgument x:TypeArguments="x:String" Name="currentItem" />
-                  </ActivityAction.Argument>
-                  <Sequence DisplayName="Body" sap:VirtualizedContainerService.HintSize="474,189" sap2010:WorkflowViewState.IdRef="Sequence_7">
-                    <sap:WorkflowViewStateService.ViewState>
-                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
-                        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
-                      </scg:Dictionary>
-                    </sap:WorkflowViewStateService.ViewState>
-                    <ui:MultipleAssign DisplayName="Multiple Assign" sap:VirtualizedContainerService.HintSize="432,101" sap2010:WorkflowViewState.IdRef="MultipleAssign_5">
-                      <ui:MultipleAssign.AssignOperations>
-                        <scg:List x:TypeArguments="ui:AssignOperation" Capacity="4">
-                          <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_11">
-                            <ui:AssignOperation.To>
-                              <OutArgument x:TypeArguments="x:String">
-                                <CSharpReference x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpReference`1_13">columnString</CSharpReference>
-                              </OutArgument>
-                            </ui:AssignOperation.To>
-                            <ui:AssignOperation.Value>
-                              <InArgument x:TypeArguments="x:String">
-                                <CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_29">columnString + columnSettingString.Replace("$ColumnName", currentItem.ToString())</CSharpValue>
-                              </InArgument>
-                            </ui:AssignOperation.Value>
-                          </ui:AssignOperation>
-                        </scg:List>
-                      </ui:MultipleAssign.AssignOperations>
-                    </ui:MultipleAssign>
-                  </Sequence>
-                </ActivityAction>
-              </ui:ForEach.Body>
-              <ui:ForEach.Values>
-                <InArgument x:TypeArguments="sc:IEnumerable">
-                  <CSharpValue x:TypeArguments="sc:IEnumerable" sap2010:WorkflowViewState.IdRef="CSharpValue`1_28">in_columnList</CSharpValue>
-                </InArgument>
-              </ui:ForEach.Values>
-              <sap:WorkflowViewStateService.ViewState>
-                <scg:Dictionary x:TypeArguments="x:String, x:Object">
-                  <x:Boolean x:Key="IsExpanded">False</x:Boolean>
-                  <x:Boolean x:Key="IsPinned">False</x:Boolean>
-                </scg:Dictionary>
-              </sap:WorkflowViewStateService.ViewState>
-            </ui:ForEach>
-            <Assign sap:VirtualizedContainerService.HintSize="434,84" sap2010:WorkflowViewState.IdRef="Assign_2">
-              <Assign.To>
-                <OutArgument x:TypeArguments="x:String">
-                  <CSharpReference x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpReference`1_14">SQLString</CSharpReference>
-                </OutArgument>
-              </Assign.To>
-              <Assign.Value>
-                <InArgument x:TypeArguments="x:String">
-                  <CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_30">SQLString.Replace("$TableColumns", columnString)</CSharpValue>
-                </InArgument>
-              </Assign.Value>
-            </Assign>
-            <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Component\\RPA Database Component\\SQL Server\\Common\\SQL Execution Non Data Return.xaml - Invoke Workflow File" sap:VirtualizedContainerService.HintSize="434,115" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_4" UnSafe="False" WorkflowFileName="Component\\RPA Database Component\\SQL Server\\Common\\SQL Execution Non Data Return.xaml">
-              <ui:InvokeWorkflowFile.Arguments>
-                <InArgument x:TypeArguments="x:String" x:Key="in_connectionString">
-                  <CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_31">in_connectionString</CSharpValue>
-                </InArgument>
-                <InArgument x:TypeArguments="x:String" x:Key="in_SQLCommandString">
-                  <CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_32">SQLString</CSharpValue>
-                </InArgument>
-              </ui:InvokeWorkflowFile.Arguments>
-            </ui:InvokeWorkflowFile>
-          </Sequence>
-        </If.Then>
-        <If.Else>
-          <Sequence sap2010:WorkflowViewState.IdRef="Sequence_6" />
-        </If.Else>
-      </If>
+      </ui:ForEach>
+      <Assign sap:VirtualizedContainerService.HintSize="508,84" sap2010:WorkflowViewState.IdRef="Assign_2">
+        <Assign.To>
+          <OutArgument x:TypeArguments="x:String">
+            <CSharpReference x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpReference`1_14">SQLString</CSharpReference>
+          </OutArgument>
+        </Assign.To>
+        <Assign.Value>
+          <InArgument x:TypeArguments="x:String">
+            <CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_30">SQLString.Replace("$TableColumns", columnString)</CSharpValue>
+          </InArgument>
+        </Assign.Value>
+      </Assign>
+      <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="SQL Execution Non Data Return.xaml - Invoke Workflow File" sap:VirtualizedContainerService.HintSize="508,115" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_4" UnSafe="False" WorkflowFileName="Component\\RPA Database Component\\MySQL\\Common\\SQL Execution Non Data Return.xaml">
+        <ui:InvokeWorkflowFile.Arguments>
+          <InArgument x:TypeArguments="x:String" x:Key="in_connectionString">
+            <CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_31">in_connectionString</CSharpValue>
+          </InArgument>
+          <InArgument x:TypeArguments="x:String" x:Key="in_SQLCommandString">
+            <CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_32">SQLString</CSharpValue>
+          </InArgument>
+        </ui:InvokeWorkflowFile.Arguments>
+      </ui:InvokeWorkflowFile>
     </Sequence>
   </Sequence>
 </Activity>
