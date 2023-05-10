@@ -95,7 +95,8 @@
         "Tests/Core/System Execution Handling/Credential/Update Credential.xaml",
         "Tests/Extention APP/Extention QueueItem/Sequence Convert QueueItem To DataRow.xaml",
         "Tests/Component/RPA Database Component/MySQL/Credential Handling/Get Credential.xaml",
-        "Tests/Component/RPA Database Component/MySQL/Exception Database Handling/Insert Exception.xaml"
+        "Tests/Component/RPA Database Component/MySQL/Exception Database Handling/Insert Exception.xaml",
+        "Tests/Component/RPA Database Component/MySQL/Process Status Handling/Status Update.xaml"
       ]
     },
     "fileInfoCollection": [
