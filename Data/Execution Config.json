@@ -9,5 +9,8 @@
 	"Transaction":{
 	    "Comment":"this will be used for Transaction data control.",
 	    "Addition":false
+	},
+	"Process":{
+	    "Comment":"this can be used for the process running."
 	}
 }
