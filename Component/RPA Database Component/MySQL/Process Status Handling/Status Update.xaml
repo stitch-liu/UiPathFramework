@@ -1,15 +1,14 @@
 <Activity mc:Ignorable="sap sap2010" x:Class="Status_Update" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=System.Private.CoreLib" xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=System.Private.CoreLib" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
   <x:Members>
-    <x:Property Name="in_taskName" Type="InArgument(x:String)" />
-    <x:Property Name="in_period" Type="InArgument(x:String)" />
     <x:Property Name="in_processStatusName" Type="InArgument(x:String)" />
     <x:Property sap2010:Annotation.AnnotationText="Running/Exception/Completed" Name="in_processStatusType" Type="InArgument(x:String)" />
     <x:Property Name="in_connectionString" Type="InArgument(x:String)" />
     <x:Property sap2010:Annotation.AnnotationText="it uses for the exception status update" Name="in_exceptionMessage" Type="InArgument(x:String)" />
     <x:Property Name="in_tableName" Type="InArgument(x:String)" />
+    <x:Property Name="in_ID" Type="InArgument(x:String)" />
   </x:Members>
   <sap2010:ExpressionActivityEditor.ExpressionActivityEditor>C#</sap2010:ExpressionActivityEditor.ExpressionActivityEditor>
-  <sap:VirtualizedContainerService.HintSize>1028,1240</sap:VirtualizedContainerService.HintSize>
+  <sap:VirtualizedContainerService.HintSize>1450,1200</sap:VirtualizedContainerService.HintSize>
   <sap2010:WorkflowViewState.IdRef>ActivityBuilder_1</sap2010:WorkflowViewState.IdRef>
   <TextExpression.NamespacesForImplementation>
     <sco:Collection x:TypeArguments="x:String">
@@ -87,7 +86,7 @@
       <AssemblyReference>UiPath.Python</AssemblyReference>
     </sco:Collection>
   </TextExpression.ReferencesForImplementation>
-  <Sequence DisplayName="Status_Update" sap:VirtualizedContainerService.HintSize="566,1175" sap2010:WorkflowViewState.IdRef="Sequence_1">
+  <Sequence DisplayName="Status_Update" sap:VirtualizedContainerService.HintSize="566,1135" sap2010:WorkflowViewState.IdRef="Sequence_1">
     <Sequence.Variables>
       <Variable x:TypeArguments="x:String" Name="SQLString" />
       <Variable x:TypeArguments="x:String" Name="processSettingString" />
@@ -100,7 +99,7 @@
     <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="504,113" sap2010:WorkflowViewState.IdRef="LogMessage_1" Level="Info">
       <ui:LogMessage.Message>
         <InArgument x:TypeArguments="x:Object">
-          <CSharpValue x:TypeArguments="x:Object" sap2010:WorkflowViewState.IdRef="CSharpValue`1_2">"process data " + in_taskName + "status update"</CSharpValue>
+          <CSharpValue x:TypeArguments="x:Object" sap2010:WorkflowViewState.IdRef="CSharpValue`1_2">"process data " + in_ID + "status update"</CSharpValue>
         </InArgument>
       </ui:LogMessage.Message>
     </ui:LogMessage>
@@ -115,10 +114,10 @@
             </ui:AssignOperation.To>
             <ui:AssignOperation.Value>
               <InArgument x:TypeArguments="x:String">
-                <CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_22" xml:space="preserve">@"UPDATE `$TableName`
+                <CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_27" xml:space="preserve">@"UPDATE `$TableName`
    SET `$ProcessStatusName` = '$ProcessStatusType'
       $ProcessSetting 
- WHERE `taskName` = '$TaskName' and `period` = '$Period'"</CSharpValue>
+ WHERE `ID` = '$ID'"</CSharpValue>
               </InArgument>
             </ui:AssignOperation.Value>
           </ui:AssignOperation>
@@ -142,14 +141,14 @@
             </ui:AssignOperation.To>
             <ui:AssignOperation.Value>
               <InArgument x:TypeArguments="x:String">
-                <CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_21">SQLString.Replace("$ProcessStatusName", in_processStatusName).Replace("$ProcessStatusType", in_processStatusType).Replace("$TaskName", in_taskName).Replace("$Period", in_period).Replace("$TableName", "DataTable_" + in_tableName)</CSharpValue>
+                <CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_28">SQLString.Replace("$ProcessStatusName", in_processStatusName).Replace("$ProcessStatusType", in_processStatusType).Replace("$ID", in_ID).Replace("$TableName", "DataTable_" + in_tableName)</CSharpValue>
               </InArgument>
             </ui:AssignOperation.Value>
           </ui:AssignOperation>
         </scg:List>
       </ui:MultipleAssign.AssignOperations>
     </ui:MultipleAssign>
-    <Switch x:TypeArguments="x:String" DisplayName="Switch" sap:VirtualizedContainerService.HintSize="504,412" sap2010:WorkflowViewState.IdRef="Switch`1_1">
+    <Switch x:TypeArguments="x:String" DisplayName="Switch" sap:VirtualizedContainerService.HintSize="504,372" sap2010:WorkflowViewState.IdRef="Switch`1_1">
       <Switch.Expression>
         <InArgument x:TypeArguments="x:String">
           <CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_3">in_processStatusType</CSharpValue>

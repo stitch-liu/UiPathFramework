@@ -1,4 +1,4 @@
-<Activity mc:Ignorable="sap sap2010" x:Class="Process_Start" sap2010:ExpressionActivityEditor.ExpressionActivityEditor="C#" sap:VirtualizedContainerService.HintSize="1349,866" sap2010:WorkflowViewState.IdRef="ActivityBuilder_1" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:njl="clr-namespace:Newtonsoft.Json.Linq;assembly=Newtonsoft.Json" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=System.Private.CoreLib" xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=System.Private.CoreLib" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+<Activity mc:Ignorable="sap sap2010" x:Class="Process_Start" sap2010:ExpressionActivityEditor.ExpressionActivityEditor="C#" sap:VirtualizedContainerService.HintSize="1450,872" sap2010:WorkflowViewState.IdRef="ActivityBuilder_1" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:njl="clr-namespace:Newtonsoft.Json.Linq;assembly=Newtonsoft.Json" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=System.Private.CoreLib" xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=System.Private.CoreLib" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
   <TextExpression.NamespacesForImplementation>
     <sco:Collection x:TypeArguments="x:String">
       <x:String>System.Activities</x:String>
@@ -90,6 +90,7 @@
       <AssemblyReference>System.Reflection.TypeExtensions</AssemblyReference>
       <AssemblyReference>System.Reflection.Metadata</AssemblyReference>
       <AssemblyReference>UiPath.Workflow</AssemblyReference>
+      <AssemblyReference>UiPath.Python</AssemblyReference>
     </sco:Collection>
   </TextExpression.ReferencesForImplementation>
   <Sequence DisplayName="Process_Start" sap:VirtualizedContainerService.HintSize="494,801" sap2010:WorkflowViewState.IdRef="Sequence_1">
@@ -109,9 +110,7 @@
     </sap:WorkflowViewStateService.ViewState>
     <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Core\\Config Handling\\InitializeJsonConfig.xaml - Invoke Workflow File" sap:VirtualizedContainerService.HintSize="432,115" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_1" UnSafe="False" WorkflowFileName="Core\\Config Handling\\Initialize Json Config.xaml">
       <ui:InvokeWorkflowFile.Arguments>
-        <InArgument x:TypeArguments="x:String" x:Key="in_jsonFilePath">
-          <Literal x:TypeArguments="x:String">Data\Config.json</Literal>
-        </InArgument>
+        <InArgument x:TypeArguments="x:String" x:Key="in_jsonFilePath">Data\Config.json</InArgument>
         <OutArgument x:TypeArguments="njl:JObject" x:Key="out_jsonConfig">
           <CSharpReference x:TypeArguments="njl:JObject" sap2010:WorkflowViewState.IdRef="CSharpReference`1_1">jsonConfig</CSharpReference>
         </OutArgument>
@@ -204,17 +203,14 @@
     </ui:InvokeWorkflowFile>
     <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Component\\RPA Database Component\\SQL Server\\Process Status Handling\\Process Start.xaml - Invoke Workflow File" sap:VirtualizedContainerService.HintSize="432,115" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_3" UnSafe="False" WorkflowFileName="Component\\RPA Database Component\\SQL Server\\Process Status Handling\\Process Start.xaml">
       <ui:InvokeWorkflowFile.Arguments>
-        <InArgument x:TypeArguments="x:String" x:Key="in_taskName">
-          <Literal x:TypeArguments="x:String">task1</Literal>
-        </InArgument>
-        <InArgument x:TypeArguments="x:String" x:Key="in_period">
-          <Literal x:TypeArguments="x:String">2023-04</Literal>
-        </InArgument>
         <InArgument x:TypeArguments="x:String" x:Key="in_connectionString">
           <CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_11">connectionString</CSharpValue>
         </InArgument>
         <InArgument x:TypeArguments="x:String" x:Key="in_tableName">
           <CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_10">tableName</CSharpValue>
+        </InArgument>
+        <InArgument x:TypeArguments="x:String" x:Key="in_ID">
+          <Literal x:TypeArguments="x:String">38B9486C-1B08-4299-8272-682B02E85A0D</Literal>
         </InArgument>
       </ui:InvokeWorkflowFile.Arguments>
     </ui:InvokeWorkflowFile>

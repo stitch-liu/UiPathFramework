@@ -1,11 +1,11 @@
-<Activity mc:Ignorable="sap sap2010" x:Class="Process" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:njl="clr-namespace:Newtonsoft.Json.Linq;assembly=Newtonsoft.Json" xmlns:s="clr-namespace:System;assembly=System.Private.CoreLib" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:sc="clr-namespace:System.Collections;assembly=System.Private.CoreLib" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=System.Private.CoreLib" xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=System.Private.CoreLib" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+<Activity mc:Ignorable="sap sap2010" x:Class="Process" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:njl="clr-namespace:Newtonsoft.Json.Linq;assembly=Newtonsoft.Json" xmlns:s="clr-namespace:System;assembly=System.Private.CoreLib" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:sc="clr-namespace:System.Collections;assembly=System.Private.CoreLib" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=System.Private.CoreLib" xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=System.Private.CoreLib" xmlns:sd="clr-namespace:System.Data;assembly=System.Data.Common" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
   <x:Members>
-    <x:Property Name="in_TransactionItem" Type="InArgument(ui:QueueItem)" />
+    <x:Property Name="in_TransactionItem" Type="InArgument(sd:DataRow)" />
     <x:Property Name="in_JsonConfig" Type="InArgument(njl:JObject)" />
     <x:Property Name="in_Config" Type="InArgument(scg:Dictionary(x:String, x:Object))" />
   </x:Members>
   <sap2010:ExpressionActivityEditor.ExpressionActivityEditor>C#</sap2010:ExpressionActivityEditor.ExpressionActivityEditor>
-  <sap:VirtualizedContainerService.HintSize>1101,819</sap:VirtualizedContainerService.HintSize>
+  <sap:VirtualizedContainerService.HintSize>1450,872</sap:VirtualizedContainerService.HintSize>
   <sap2010:WorkflowViewState.IdRef>ActivityBuilder_1</sap2010:WorkflowViewState.IdRef>
   <TextExpression.NamespacesForImplementation>
     <sco:Collection x:TypeArguments="x:String">
@@ -98,6 +98,8 @@
       <AssemblyReference>System.Memory</AssemblyReference>
       <AssemblyReference>System.Private.Uri</AssemblyReference>
       <AssemblyReference>UiPath.Workflow</AssemblyReference>
+      <AssemblyReference>System.Data.SqlClient</AssemblyReference>
+      <AssemblyReference>UiPath.Python</AssemblyReference>
     </sco:Collection>
   </TextExpression.ReferencesForImplementation>
   <Sequence DisplayName="Process" sap:VirtualizedContainerService.HintSize="512,724" sap2010:WorkflowViewState.IdRef="Sequence_1">
@@ -107,6 +109,7 @@
       <Variable x:TypeArguments="x:Boolean" Name="DBValid" />
       <Variable x:TypeArguments="x:String" Name="systemDBType" />
       <Variable x:TypeArguments="scg:List(x:String)" Name="keyStatusList" />
+      <Variable x:TypeArguments="x:String" Name="ID" />
     </Sequence.Variables>
     <sap:WorkflowViewStateService.ViewState>
       <scg:Dictionary x:TypeArguments="x:String, x:Object">
@@ -128,7 +131,7 @@
         </scg:Dictionary>
       </sap:WorkflowViewStateService.ViewState>
       <ui:Comment sap:VirtualizedContainerService.HintSize="432,56" sap2010:WorkflowViewState.IdRef="Comment_4" Text="taskName/period来源于in_TransactionItem" />
-      <ui:MultipleAssign DisplayName="Multiple Assign" sap:VirtualizedContainerService.HintSize="432,225" sap2010:WorkflowViewState.IdRef="MultipleAssign_1">
+      <ui:MultipleAssign DisplayName="Multiple Assign" sap:VirtualizedContainerService.HintSize="432,256" sap2010:WorkflowViewState.IdRef="MultipleAssign_1">
         <ui:MultipleAssign.AssignOperations>
           <scg:List x:TypeArguments="ui:AssignOperation" Capacity="8">
             <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_1">
@@ -139,7 +142,7 @@
               </ui:AssignOperation.To>
               <ui:AssignOperation.Value>
                 <InArgument x:TypeArguments="x:String">
-                  <CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_14">in_TransactionItem.QueueName[0].ToString()</CSharpValue>
+                  <CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_32">in_TransactionItem["TaskName"].ToString()</CSharpValue>
                 </InArgument>
               </ui:AssignOperation.Value>
             </ui:AssignOperation>
@@ -151,7 +154,7 @@
               </ui:AssignOperation.To>
               <ui:AssignOperation.Value>
                 <InArgument x:TypeArguments="x:String">
-                  <CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_15">in_TransactionItem.QueueName[1].ToString()</CSharpValue>
+                  <CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_33">in_TransactionItem["Period"].ToString()</CSharpValue>
                 </InArgument>
               </ui:AssignOperation.Value>
             </ui:AssignOperation>
@@ -191,6 +194,18 @@
                 </InArgument>
               </ui:AssignOperation.Value>
             </ui:AssignOperation>
+            <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_6">
+              <ui:AssignOperation.To>
+                <OutArgument x:TypeArguments="x:String">
+                  <CSharpReference x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpReference`1_7">ID</CSharpReference>
+                </OutArgument>
+              </ui:AssignOperation.To>
+              <ui:AssignOperation.Value>
+                <InArgument x:TypeArguments="x:String">
+                  <CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_34">in_TransactionItem["ID"].ToString()</CSharpValue>
+                </InArgument>
+              </ui:AssignOperation.Value>
+            </ui:AssignOperation>
           </scg:List>
         </ui:MultipleAssign.AssignOperations>
         <sap:WorkflowViewStateService.ViewState>
@@ -200,64 +215,43 @@
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </ui:MultipleAssign>
-      <Switch x:TypeArguments="x:String" DisplayName="Switch" sap:VirtualizedContainerService.HintSize="432,54" sap2010:WorkflowViewState.IdRef="Switch`1_1">
-        <Switch.Expression>
-          <InArgument x:TypeArguments="x:String">
-            <CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_19">systemDBType</CSharpValue>
+      <ui:ForEach x:TypeArguments="x:Object" CurrentIndex="{x:Null}" DisplayName="For Each" sap:VirtualizedContainerService.HintSize="432,427" sap2010:WorkflowViewState.IdRef="ForEach`1_2">
+        <ui:ForEach.Body>
+          <ActivityAction x:TypeArguments="x:Object">
+            <ActivityAction.Argument>
+              <DelegateInArgument x:TypeArguments="x:Object" Name="currentItem" />
+            </ActivityAction.Argument>
+            <Sequence DisplayName="Body" sap:VirtualizedContainerService.HintSize="376,253" sap2010:WorkflowViewState.IdRef="Sequence_6">
+              <sap:WorkflowViewStateService.ViewState>
+                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                  <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                </scg:Dictionary>
+              </sap:WorkflowViewStateService.ViewState>
+              <ui:InvokeCode ContinueOnError="{x:Null}" Code="keyStatus.Add(keyItem);" DisplayName="Invoke Code" sap:VirtualizedContainerService.HintSize="334,165" sap2010:WorkflowViewState.IdRef="InvokeCode_1" Language="CSharp">
+                <ui:InvokeCode.Arguments>
+                  <InOutArgument x:TypeArguments="scg:List(x:String)" x:Key="keyStatus">
+                    <CSharpReference x:TypeArguments="scg:List(x:String)" sap2010:WorkflowViewState.IdRef="CSharpReference`1_6">keyStatusList</CSharpReference>
+                  </InOutArgument>
+                  <InArgument x:TypeArguments="x:String" x:Key="keyItem">
+                    <CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_21">currentItem.ToString()</CSharpValue>
+                  </InArgument>
+                </ui:InvokeCode.Arguments>
+              </ui:InvokeCode>
+            </Sequence>
+          </ActivityAction>
+        </ui:ForEach.Body>
+        <ui:ForEach.Values>
+          <InArgument x:TypeArguments="sc:IEnumerable">
+            <CSharpValue x:TypeArguments="sc:IEnumerable" sap2010:WorkflowViewState.IdRef="CSharpValue`1_20">in_jsonConfig["Database"]["SystemDB"]["TableName_ProcessStatus_KeyStatus"]</CSharpValue>
           </InArgument>
-        </Switch.Expression>
+        </ui:ForEach.Values>
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
-            <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
             <x:Boolean x:Key="IsPinned">False</x:Boolean>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
-        <Sequence x:Key="SQL Server" sap:VirtualizedContainerService.HintSize="472,307" sap2010:WorkflowViewState.IdRef="Sequence_7">
-          <sap:WorkflowViewStateService.ViewState>
-            <scg:Dictionary x:TypeArguments="x:String, x:Object">
-              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
-              <x:Boolean x:Key="IsPinned">False</x:Boolean>
-            </scg:Dictionary>
-          </sap:WorkflowViewStateService.ViewState>
-          <ui:ForEach x:TypeArguments="x:Object" CurrentIndex="{x:Null}" DisplayName="For Each" sap:VirtualizedContainerService.HintSize="388,174" sap2010:WorkflowViewState.IdRef="ForEach`1_2">
-            <ui:ForEach.Body>
-              <ActivityAction x:TypeArguments="x:Object">
-                <ActivityAction.Argument>
-                  <DelegateInArgument x:TypeArguments="x:Object" Name="currentItem" />
-                </ActivityAction.Argument>
-                <Sequence DisplayName="Body" sap:VirtualizedContainerService.HintSize="376,253" sap2010:WorkflowViewState.IdRef="Sequence_6">
-                  <sap:WorkflowViewStateService.ViewState>
-                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
-                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
-                    </scg:Dictionary>
-                  </sap:WorkflowViewStateService.ViewState>
-                  <ui:InvokeCode ContinueOnError="{x:Null}" Code="keyStatus.Add(keyItem);" DisplayName="Invoke Code" sap:VirtualizedContainerService.HintSize="334,165" sap2010:WorkflowViewState.IdRef="InvokeCode_1" Language="CSharp">
-                    <ui:InvokeCode.Arguments>
-                      <InOutArgument x:TypeArguments="scg:List(x:String)" x:Key="keyStatus">
-                        <CSharpReference x:TypeArguments="scg:List(x:String)" sap2010:WorkflowViewState.IdRef="CSharpReference`1_6">keyStatusList</CSharpReference>
-                      </InOutArgument>
-                      <InArgument x:TypeArguments="x:String" x:Key="keyItem">
-                        <CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_21">currentItem.ToString()</CSharpValue>
-                      </InArgument>
-                    </ui:InvokeCode.Arguments>
-                  </ui:InvokeCode>
-                </Sequence>
-              </ActivityAction>
-            </ui:ForEach.Body>
-            <ui:ForEach.Values>
-              <InArgument x:TypeArguments="sc:IEnumerable">
-                <CSharpValue x:TypeArguments="sc:IEnumerable" sap2010:WorkflowViewState.IdRef="CSharpValue`1_20">in_jsonConfig["Database"]["SystemDB"]["TableName_ProcessStatus_KeyStatus"]</CSharpValue>
-              </InArgument>
-            </ui:ForEach.Values>
-            <sap:WorkflowViewStateService.ViewState>
-              <scg:Dictionary x:TypeArguments="x:String, x:Object">
-                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
-                <x:Boolean x:Key="IsPinned">False</x:Boolean>
-              </scg:Dictionary>
-            </sap:WorkflowViewStateService.ViewState>
-          </ui:ForEach>
-        </Sequence>
-      </Switch>
+      </ui:ForEach>
     </Sequence>
     <Sequence DisplayName="Process Start" sap:VirtualizedContainerService.HintSize="450,85" sap2010:WorkflowViewState.IdRef="Sequence_2">
       <sap:WorkflowViewStateService.ViewState>
@@ -272,11 +266,8 @@
           <InArgument x:TypeArguments="njl:JObject" x:Key="in_jsonConfig">
             <CSharpValue x:TypeArguments="njl:JObject" sap2010:WorkflowViewState.IdRef="CSharpValue`1_4">in_JsonConfig</CSharpValue>
           </InArgument>
-          <InArgument x:TypeArguments="x:String" x:Key="in_taskName">
-            <CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_3">taskName</CSharpValue>
-          </InArgument>
-          <InArgument x:TypeArguments="x:String" x:Key="in_period">
-            <CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_2">period</CSharpValue>
+          <InArgument x:TypeArguments="x:String" x:Key="in_ID">
+            <CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_35">ID</CSharpValue>
           </InArgument>
         </ui:InvokeWorkflowFile.Arguments>
       </ui:InvokeWorkflowFile>
@@ -308,12 +299,6 @@
                   <InArgument x:TypeArguments="njl:JObject" x:Key="in_jsonConfig">
                     <CSharpValue x:TypeArguments="njl:JObject" sap2010:WorkflowViewState.IdRef="CSharpValue`1_13">in_JsonConfig</CSharpValue>
                   </InArgument>
-                  <InArgument x:TypeArguments="x:String" x:Key="in_taskName">
-                    <CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_12">taskName</CSharpValue>
-                  </InArgument>
-                  <InArgument x:TypeArguments="x:String" x:Key="in_period">
-                    <CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_11">period</CSharpValue>
-                  </InArgument>
                   <InArgument x:TypeArguments="x:String" x:Key="in_processStatusType">
                     <Literal x:TypeArguments="x:String">Running</Literal>
                   </InArgument>
@@ -321,12 +306,15 @@
                   <InArgument x:TypeArguments="x:String" x:Key="in_processStatusName">
                     <CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_22">keyStatusList[0]</CSharpValue>
                   </InArgument>
+                  <InArgument x:TypeArguments="x:String" x:Key="in_ID">
+                    <CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_36">ID</CSharpValue>
+                  </InArgument>
                 </ui:InvokeWorkflowFile.Arguments>
               </ui:InvokeWorkflowFile>
               <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Tests\\Demo\\Sub Process.xaml - Invoke Workflow File" sap:VirtualizedContainerService.HintSize="388,115" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_3" UnSafe="False" WorkflowFileName="Tests\\Demo\\Sub Process.xaml">
                 <ui:InvokeWorkflowFile.Arguments>
-                  <InArgument x:TypeArguments="ui:QueueItem" x:Key="in_TransactionItem">
-                    <CSharpValue x:TypeArguments="ui:QueueItem" sap2010:WorkflowViewState.IdRef="CSharpValue`1_10">in_TransactionItem</CSharpValue>
+                  <InArgument x:TypeArguments="sd:DataRow" x:Key="in_TransactionItem">
+                    <CSharpValue x:TypeArguments="sd:DataRow" sap2010:WorkflowViewState.IdRef="CSharpValue`1_37">in_TransactionItem</CSharpValue>
                   </InArgument>
                   <InArgument x:TypeArguments="njl:JObject" x:Key="in_JsonConfig">
                     <CSharpValue x:TypeArguments="njl:JObject" sap2010:WorkflowViewState.IdRef="CSharpValue`1_9">in_JsonConfig</CSharpValue>
@@ -341,18 +329,15 @@
                   <InArgument x:TypeArguments="njl:JObject" x:Key="in_jsonConfig">
                     <CSharpValue x:TypeArguments="njl:JObject" sap2010:WorkflowViewState.IdRef="CSharpValue`1_26">in_JsonConfig</CSharpValue>
                   </InArgument>
-                  <InArgument x:TypeArguments="x:String" x:Key="in_taskName">
-                    <CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_25">taskName</CSharpValue>
-                  </InArgument>
-                  <InArgument x:TypeArguments="x:String" x:Key="in_period">
-                    <CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_24">period</CSharpValue>
-                  </InArgument>
                   <InArgument x:TypeArguments="x:String" x:Key="in_processStatusType">
                     <Literal x:TypeArguments="x:String">Completed</Literal>
                   </InArgument>
                   <InArgument x:TypeArguments="x:String" x:Key="in_exceptionMessage" />
                   <InArgument x:TypeArguments="x:String" x:Key="in_processStatusName">
                     <CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_23">keyStatusList[0]</CSharpValue>
+                  </InArgument>
+                  <InArgument x:TypeArguments="x:String" x:Key="in_ID">
+                    <CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_38">ID</CSharpValue>
                   </InArgument>
                 </ui:InvokeWorkflowFile.Arguments>
               </ui:InvokeWorkflowFile>
@@ -387,9 +372,7 @@
                       <InArgument x:TypeArguments="x:String" x:Key="in_period">
                         <CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_29">period</CSharpValue>
                       </InArgument>
-                      <InArgument x:TypeArguments="x:String" x:Key="in_processStatusType">
-                        <Literal x:TypeArguments="x:String">Exception</Literal>
-                      </InArgument>
+                      <InArgument x:TypeArguments="x:String" x:Key="in_processStatusType">Exception</InArgument>
                       <InArgument x:TypeArguments="x:String" x:Key="in_exceptionMessage">
                         <CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_28">exception.Message.ToString()</CSharpValue>
                       </InArgument>

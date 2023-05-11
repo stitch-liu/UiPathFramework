@@ -1,18 +1,11 @@
 <Activity mc:Ignorable="sap sap2010" x:Class="Process_Update" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:njl="clr-namespace:Newtonsoft.Json.Linq;assembly=Newtonsoft.Json" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=System.Private.CoreLib" xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=System.Private.CoreLib" xmlns:this="clr-namespace:" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
   <x:Members>
     <x:Property Name="in_jsonConfig" Type="InArgument(njl:JObject)" />
-    <x:Property Name="in_taskName" Type="InArgument(x:String)" />
-    <x:Property Name="in_period" Type="InArgument(x:String)" />
     <x:Property Name="in_processStatusType" Type="InArgument(x:String)" />
     <x:Property Name="in_exceptionMessage" Type="InArgument(x:String)" />
     <x:Property Name="in_processStatusName" Type="InArgument(x:String)" />
+    <x:Property Name="in_ID" Type="InArgument(x:String)" />
   </x:Members>
-  <this:Process_Update.in_taskName>
-    <InArgument x:TypeArguments="x:String" />
-  </this:Process_Update.in_taskName>
-  <this:Process_Update.in_period>
-    <InArgument x:TypeArguments="x:String" />
-  </this:Process_Update.in_period>
   <this:Process_Update.in_processStatusType>
     <InArgument x:TypeArguments="x:String" />
   </this:Process_Update.in_processStatusType>
@@ -22,6 +15,9 @@
   <this:Process_Update.in_processStatusName>
     <InArgument x:TypeArguments="x:String" />
   </this:Process_Update.in_processStatusName>
+  <this:Process_Update.in_ID>
+    <InArgument x:TypeArguments="x:String" />
+  </this:Process_Update.in_ID>
   <sap2010:ExpressionActivityEditor.ExpressionActivityEditor>C#</sap2010:ExpressionActivityEditor.ExpressionActivityEditor>
   <sap:VirtualizedContainerService.HintSize>1450,1773</sap:VirtualizedContainerService.HintSize>
   <sap2010:WorkflowViewState.IdRef>ActivityBuilder_1</sap2010:WorkflowViewState.IdRef>
@@ -296,12 +292,6 @@
               </ui:InvokeWorkflowFile>
               <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Component\\RPA Database Component\\SQL Server\\Process Status Handling\\Status Update.xaml - Invoke Workflow File" sap:VirtualizedContainerService.HintSize="388,115" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_2" UnSafe="False" WorkflowFileName="Component\\RPA Database Component\\SQL Server\\Process Status Handling\\Status Update.xaml">
                 <ui:InvokeWorkflowFile.Arguments>
-                  <InArgument x:TypeArguments="x:String" x:Key="in_taskName">
-                    <CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_21">in_taskName</CSharpValue>
-                  </InArgument>
-                  <InArgument x:TypeArguments="x:String" x:Key="in_period">
-                    <CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_20">in_period</CSharpValue>
-                  </InArgument>
                   <InArgument x:TypeArguments="x:String" x:Key="in_processStatusName">
                     <CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_19">in_processStatusName</CSharpValue>
                   </InArgument>
@@ -316,6 +306,9 @@
                   </InArgument>
                   <InArgument x:TypeArguments="x:String" x:Key="in_tableName">
                     <CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_15">processStatusTableName</CSharpValue>
+                  </InArgument>
+                  <InArgument x:TypeArguments="x:String" x:Key="in_ID">
+                    <CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_37">in_ID</CSharpValue>
                   </InArgument>
                 </ui:InvokeWorkflowFile.Arguments>
               </ui:InvokeWorkflowFile>
@@ -389,12 +382,6 @@
               </ui:InvokeWorkflowFile>
               <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Status Update.xaml - Invoke Workflow File" sap:VirtualizedContainerService.HintSize="432,115" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_4" UnSafe="False" WorkflowFileName="Component\\RPA Database Component\\MySQL\\Process Status Handling\\Status Update.xaml">
                 <ui:InvokeWorkflowFile.Arguments>
-                  <InArgument x:TypeArguments="x:String" x:Key="in_taskName">
-                    <CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_30">in_taskName</CSharpValue>
-                  </InArgument>
-                  <InArgument x:TypeArguments="x:String" x:Key="in_period">
-                    <CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_31">in_period</CSharpValue>
-                  </InArgument>
                   <InArgument x:TypeArguments="x:String" x:Key="in_processStatusName">
                     <CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_32">in_processStatusName</CSharpValue>
                   </InArgument>
@@ -409,6 +396,9 @@
                   </InArgument>
                   <InArgument x:TypeArguments="x:String" x:Key="in_tableName">
                     <CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_36">processStatusTableName</CSharpValue>
+                  </InArgument>
+                  <InArgument x:TypeArguments="x:String" x:Key="in_ID">
+                    <CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_38">in_ID</CSharpValue>
                   </InArgument>
                 </ui:InvokeWorkflowFile.Arguments>
               </ui:InvokeWorkflowFile>

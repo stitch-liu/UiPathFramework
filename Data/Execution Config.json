@@ -3,6 +3,11 @@
 	"Comment":"this config is used for the process execution.",
 	"Period":"2023-04",
 	"Database":{
+	    "Comment":"this will be used for database control.",
 	    "Initialize":false		
+	},
+	"Transaction":{
+	    "Comment":"this will be used for Transaction data control.",
+	    "Addition":false
 	}
 }

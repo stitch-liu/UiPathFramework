@@ -235,12 +235,6 @@
     </ui:InvokeWorkflowFile>
     <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Status Update.xaml - Invoke Workflow File" sap:VirtualizedContainerService.HintSize="432,115" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_3" UnSafe="False" WorkflowFileName="Component\\RPA Database Component\\MySQL\\Process Status Handling\\Status Update.xaml">
       <ui:InvokeWorkflowFile.Arguments>
-        <InArgument x:TypeArguments="x:String" x:Key="in_taskName">
-          <Literal x:TypeArguments="x:String">task1</Literal>
-        </InArgument>
-        <InArgument x:TypeArguments="x:String" x:Key="in_period">
-          <Literal x:TypeArguments="x:String">2023-05</Literal>
-        </InArgument>
         <InArgument x:TypeArguments="x:String" x:Key="in_processStatusName">
           <Literal x:TypeArguments="x:String">processStatus3</Literal>
         </InArgument>
@@ -255,6 +249,9 @@
         </InArgument>
         <InArgument x:TypeArguments="x:String" x:Key="in_tableName">
           <CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_10">tableName</CSharpValue>
+        </InArgument>
+        <InArgument x:TypeArguments="x:String" x:Key="in_ID">
+          <Literal x:TypeArguments="x:String">0ddbd3c7-ef05-11ed-b6c0-00155d02ea01</Literal>
         </InArgument>
       </ui:InvokeWorkflowFile.Arguments>
     </ui:InvokeWorkflowFile>
